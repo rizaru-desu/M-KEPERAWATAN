@@ -28,8 +28,45 @@ app.use(cors());
 
 app.use(express.static("client"));
 
-/**  API CREATE USER*/
-app.post("/API-Create", function (req, res, next) {
+app.post("/find-email", function (req, res, next) {
+  admin
+    .auth()
+    .getUserByEmail(req.body.usergetEmail)
+    .then((userRecord) => {
+      // See the UserRecord reference doc for the contents of userRecord.
+      console.log(`Successfully fetched user data: ${userRecord.toJSON()}`);
+      res.send(userRecord.toJSON());
+    })
+    .catch((error) => {
+      console.log("Error fetching user data:", error);
+    });
+});
+
+app.post("/remove-users", function (req, res, next) {
+  admin
+    .auth()
+    .deleteUser(req.body.useruid)
+    .then(function () {
+      console.log("Successfully deleted user");
+      var adaRef = admin.database().ref("FARMASI/" + req.body.useruid);
+      adaRef
+        .remove()
+        .then(function () {
+          console.log("Remove succeeded.");
+        })
+        .catch(function (error) {
+          res.send(error);
+        });
+      res.send({
+        data: "Remove succeeded.",
+      });
+    })
+    .catch(function (error) {
+      res.send(error);
+    });
+});
+
+app.post("/create-users", function (req, res, next) {
   admin
     .auth()
     .createUser({
@@ -39,200 +76,209 @@ app.post("/API-Create", function (req, res, next) {
       password: req.body.password,
       displayName: req.body.displayName,
       photoURL:
-        "https://firebasestorage.googleapis.com/v0/b/materi-keperawatan.appspot.com/o/data%2Fprofile.png?alt=media&token=d99bdc0e-22bf-4749-a792-4d562b52dfcc",
+        "https://firebasestorage.googleapis.com/v0/b/alter-fku.appspot.com/o/upload%2Fimg%2Fprofile.png?alt=media&token=0de26008-f165-4ab5-b714-8569406edfdf",
       disabled: false,
     })
-    .then((userRecord) => {
+    .then(function (userRecord) {
       // See the UserRecord reference doc for the contents of userRecord.
-      var usersRef = admin.database().ref("/").child(userRecord.uid);
+      var usersRef = admin.database().ref("FARMASI").child(userRecord.uid);
       usersRef.set({
-        displayCampus: req.body.displayCampus,
-        serialKey: req.body.serialKey,
-        previllage: req.body.previllage,
+        email: req.body.email,
+        kampus: req.body.display_kampus,
+        userandroidid: req.body.mac_key,
+        name: req.body.displayName,
+        no_hp: req.body.phoneNumber,
+        latitude: "-6.2047689",
+        latitude: "106.7429753",
+        imgurl:
+          "https://firebasestorage.googleapis.com/v0/b/alter-fku.appspot.com/o/upload%2Fimg%2Fprofile.png?alt=media&token=0de26008-f165-4ab5-b714-8569406edfdf",
       });
       res.send({
         message: userRecord.uid,
       });
-      // See the UserRecord reference doc for the contents of userRecord.
-      console.log("Successfully created new user:", userRecord.uid);
     })
-    .catch((error) => {
+    .catch(function (error) {
       res.send(error);
     });
 });
 
-app.get("/API-Menu", function (req, res, next) {
-  res.send([
-    {
-      title: "Materi Keperawatan",
-      subtitle: "Berisi materi-materi pembelajaran tentang Keperawatan.",
-      illustration:
-        "https://firebasestorage.googleapis.com/v0/b/materi-keperawatan.appspot.com/o/data%2Fimage%2Ficon-materi.png?alt=media&token=2e9a75f5-d194-4c0b-846d-4cfcd2da9f05",
-      page: "MateriKeperawatan",
-    },
-    {
-      title: "Tips & Trik Uji Kompetensi",
-      subtitle:
-        "Berisi kumpulan video tips dan trik dalam Uji Kompetensi keperawatan.",
-      illustration:
-        "https://firebasestorage.googleapis.com/v0/b/materi-keperawatan.appspot.com/o/data%2Fimage%2Ficon-tip.png?alt=media&token=3abaecb2-d86a-4702-a0ff-8d45becfd18c",
-      page: "PlayList",
-    },
-    {
-      title: "S.O.P Keperawatan",
-      subtitle: "Berisi kumpulan video S.O.P tentang Keperawatan.",
-      illustration:
-        "https://firebasestorage.googleapis.com/v0/b/materi-keperawatan.appspot.com/o/data%2Fimage%2Ficon-sop.png?alt=media&token=d8e1fd61-70ed-4313-a673-d814fd789156",
-      page: "PlayList",
-    },
-    {
-      title: "Jurnal Keperawatan",
-      subtitle: "Berisi kumpulan jurnal keperawatan.",
-      illustration:
-        "https://firebasestorage.googleapis.com/v0/b/materi-keperawatan.appspot.com/o/data%2Fimage%2Ficon-jurnal.png?alt=media&token=b0f685dc-02fb-4a39-951c-08b6cafd55cb",
-      page: "JurnalKeperawatan",
-    },
-    {
-      title: "Kamus Kesehatan",
-      subtitle: "Berisi istilah dan bahasa yang dipakai pada bidang kesehatan.",
-      illustration:
-        "https://firebasestorage.googleapis.com/v0/b/materi-keperawatan.appspot.com/o/data%2Fimage%2Ficon-ebook.png?alt=media&token=107657c9-9d21-4feb-9adb-1cf70705293e",
-      page: "KamusKesehatan",
-    },
-    {
-      title: "Tim Penyusun",
-      subtitle: "Daftar profil tim penyusun dalam materi keperawatan.",
-      illustration:
-        "https://firebasestorage.googleapis.com/v0/b/materi-keperawatan.appspot.com/o/data%2Fimage%2Ficon-tim.png?alt=media&token=14cee5aa-6bbc-4e06-b2c1-a4a58283f986",
-      page: "PenyusunKeperawatan",
-    },
-  ]);
+app.post("/change-key", function (req, res, next) {
+  var usersRef = admin.database().ref("FARMASI").child(req.body.useruid);
+  usersRef
+    .update({
+      userandroidid: req.body.new_mac_key,
+    })
+    .then(function () {
+      res.send({
+        data: "Change Key succeeded.",
+      });
+    });
 });
 
-/**  API GET MENU */
-app.get("/API-Materi", function (req, res, next) {
-  res.send([
-    {
-      title: "Medikal Bedah",
-      images:
-        "https://firebasestorage.googleapis.com/v0/b/materi-keperawatan.appspot.com/o/data%2Fmateri%2Ficon%2Ficon-medikalbedah.png?alt=media&token=61196de6-7018-4ecd-89e4-112bfcec9774",
-      index: "d3a54144796ef58cdd43c13f28b188b8",
-    },
-    {
-      title: "Psikologi",
-      images:
-        "https://firebasestorage.googleapis.com/v0/b/materi-keperawatan.appspot.com/o/data%2Fmateri%2Ficon%2Ficon-piskologi.png?alt=media&token=01bbecc6-7559-4b5a-bb25-10e3da034636",
-      index: "",
-    },
-    {
-      title: "Kebutuhan Dasar Manusia",
-      images:
-        "https://firebasestorage.googleapis.com/v0/b/materi-keperawatan.appspot.com/o/data%2Fmateri%2Ficon%2Ficon-kebutuhan.png?alt=media&token=e152efa3-6546-4859-a9da-6b35856c56d1",
-      index: "",
-    },
-    {
-      title: "Pengantar Riset",
-      images:
-        "https://firebasestorage.googleapis.com/v0/b/materi-keperawatan.appspot.com/o/data%2Fmateri%2Ficon%2Ficon-riset.png?alt=media&token=ebbbe9c0-822e-47de-adf6-caa33f807fb7",
-      index: "",
-    },
-    {
-      title: "Promosi Kesehatan",
-      images:
-        "https://firebasestorage.googleapis.com/v0/b/materi-keperawatan.appspot.com/o/data%2Fmateri%2Ficon%2Ficon-promosi.png?alt=media&token=d27261cd-fa8a-49a2-978a-a57846556c74",
-      index: "",
-    },
-    {
-      title: "Manajemen Keselamatan",
-      images:
-        "https://firebasestorage.googleapis.com/v0/b/materi-keperawatan.appspot.com/o/data%2Fmateri%2Ficon%2Ficon-manajemenkeselamatan.png?alt=media&token=591703ec-8761-421a-8d7b-2822873b0ba3",
-      index: "",
-    },
-    {
-      title: "Komunitas & Keluarga",
-      images:
-        "https://firebasestorage.googleapis.com/v0/b/materi-keperawatan.appspot.com/o/data%2Fmateri%2Ficon%2Ficon-komunitas%26keluarga.png?alt=media&token=aeffa4a1-44a6-4780-af61-e98eec9950ac",
-      index: "",
-    },
-    {
-      title: "Kegawatdaruratan",
-      images:
-        "https://firebasestorage.googleapis.com/v0/b/materi-keperawatan.appspot.com/o/data%2Fmateri%2Ficon%2Ficon-ugd.png?alt=media&token=a62a4976-7bfa-48f1-8aad-e14c01c0b6e4",
-      index: "",
-    },
-    {
-      title: "Gerontik",
-      images:
-        "https://firebasestorage.googleapis.com/v0/b/materi-keperawatan.appspot.com/o/data%2Fmateri%2Ficon%2Ficon-gerontik.png?alt=media&token=2ee046f2-4250-4c24-b3e5-819333d3ac51",
-      index: "",
-    },
-    {
-      title: "Ilmu Gizi",
-      images:
-        "https://firebasestorage.googleapis.com/v0/b/materi-keperawatan.appspot.com/o/data%2Fmateri%2Ficon%2Ficon-gizi.png?alt=media&token=d6dd4c5f-802f-44f9-aae2-15825238ab4d",
-      index: "",
-    },
-    {
-      title: "Anak",
-      images:
-        "https://firebasestorage.googleapis.com/v0/b/materi-keperawatan.appspot.com/o/data%2Fmateri%2Ficon%2Ficon-anak.png?alt=media&token=ec253eec-a341-412f-be57-7dba8efb885d",
-      index: "",
-    },
-    {
-      title: "Konsep Dasar",
-      images:
-        "https://firebasestorage.googleapis.com/v0/b/materi-keperawatan.appspot.com/o/data%2Fmateri%2Ficon%2Ficon-konsepdasar.png?alt=media&token=3d50c2ec-50ca-4794-b377-327dc0fdb0ce",
-      index: "",
-    },
-    {
-      title: "Etika",
-      images:
-        "https://firebasestorage.googleapis.com/v0/b/materi-keperawatan.appspot.com/o/data%2Fmateri%2Ficon%2Ficon-etika.png?alt=media&token=beaf8b33-ecdd-491b-ad0a-5e39ff5f13ac",
-      index: "",
-    },
-    {
-      title: "Maternitas",
-      images:
-        "https://firebasestorage.googleapis.com/v0/b/materi-keperawatan.appspot.com/o/data%2Fmateri%2Ficon%2Ficon-maternitas.png?alt=media&token=653c67d7-2e6e-4786-a7c1-f0b09665294b",
-      index: "",
-    },
-    {
-      title: "Manajemen",
-      images:
-        "https://firebasestorage.googleapis.com/v0/b/materi-keperawatan.appspot.com/o/data%2Fmateri%2Ficon%2Ficon-manajemen.png?alt=media&token=f5800238-2a8c-48f9-8522-9b2279ffdb90",
-      index: "",
-    },
-    {
-      title: "Komunikasi",
-      images:
-        "https://firebasestorage.googleapis.com/v0/b/materi-keperawatan.appspot.com/o/data%2Fmateri%2Ficon%2Ficon-komunikasi.png?alt=media&token=60e23e60-411b-45f9-9911-359d03f802e4",
-      index: "",
-    },
-    {
-      title: "Biomedik",
-      images:
-        "https://firebasestorage.googleapis.com/v0/b/materi-keperawatan.appspot.com/o/data%2Fmateri%2Ficon%2Ficon-biomedik.png?alt=media&token=d3bf3f18-74ca-47f2-8b3d-3081d9e9309e",
-      index: "",
-    },
-    {
-      title: "Farmakologi",
-      images:
-        "https://firebasestorage.googleapis.com/v0/b/materi-keperawatan.appspot.com/o/data%2Fmateri%2Ficon%2Ficon-farmakologi.png?alt=media&token=0e6d83f2-0658-49e9-a803-378c4376d5c0",
-      index: "",
-    },
-    {
-      title: "Mikrobiologi",
-      images:
-        "https://firebasestorage.googleapis.com/v0/b/materi-keperawatan.appspot.com/o/data%2Fmateri%2Ficon%2Ficon-mikrobiologi.png?alt=media&token=c3cc7ebc-bb48-4297-8fd7-1cdf9af5e29a",
-      index: "",
-    },
-    {
-      title: "Jiwa",
-      images:
-        "https://firebasestorage.googleapis.com/v0/b/materi-keperawatan.appspot.com/o/data%2Fmateri%2Ficon%2Ficon-jiwa.png?alt=media&token=96e4fc47-e963-4709-b646-ce9a33141a5d",
-      index: "",
-    },
-  ]);
+app.post("/get-db", function (req, res, next) {
+  var db = admin.database();
+  var ref = db.ref("FARMASI/" + req.body.useruid);
+  ref.once("value").then(function (snapshot) {
+    res.send({
+      data: snapshot.val().userandroidid,
+    });
+  });
+});
+
+app.post("/reset", function (req, res) {
+  const useremail = req.body.usergetEmail;
+  admin
+    .auth()
+    .generatePasswordResetLink(useremail)
+    .then((link) => {
+      // Construct password reset email template, embed the link and send
+      // using custom SMTP server.
+      let mailOptions = {
+        from: "Dont Reply <tim.sahabatalter@gmail.com>",
+        to: useremail,
+        subject: "Permintaan Reset Kata Sandi",
+        html:
+          '<!doctype html> <html xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office"> <head> <title> </title> <!--[if !mso]><!-- --> <meta http-equiv="X-UA-Compatible" content="IE=edge"> <!--<![endif]--> <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"> <meta name="viewport" content="width=device-width, initial-scale=1"> <style type="text/css"> #outlook a { padding:0; } .ReadMsgBody { width:100%; } .ExternalClass { width:100%; } .ExternalClass * { line-height:100%; } body { margin:0;padding:0;-webkit-text-size-adjust:100%;-ms-text-size-adjust:100%; } table, td { border-collapse:collapse;mso-table-lspace:0pt;mso-table-rspace:0pt; } img { border:0;height:auto;line-height:100%; outline:none;text-decoration:none;-ms-interpolation-mode:bicubic; } p { display:block;margin:13px 0; } </style> <!--[if !mso]><!--> <style type="text/css"> @media only screen and (max-width:480px) { @-ms-viewport { width:320px; } @viewport { width:320px; } } </style> <!--<![endif]--> <!--[if mso]> <xml> <o:OfficeDocumentSettings> <o:AllowPNG/> <o:PixelsPerInch>96</o:PixelsPerInch> </o:OfficeDocumentSettings> </xml> <![endif]--> <!--[if lte mso 11]> <style type="text/css"> .outlook-group-fix { width:100% !important; } </style> <![endif]--> <!--[if !mso]><!--> <link href="https://fonts.googleapis.com/css?family=Ubuntu:300,400,500,700" rel="stylesheet" type="text/css"> <link href="https://fonts.googleapis.com/css?family=Cabin:400,700" rel="stylesheet" type="text/css"> <style type="text/css"> @import url(https://fonts.googleapis.com/css?family=Ubuntu:300,400,500,700); @import url(https://fonts.googleapis.com/css?family=Cabin:400,700); </style> <!--<![endif]--><style type="text/css"> @media only screen and (min-width:480px) { .mj-column-per-100 { width:100% !important; max-width: 100%; } } </style> <style type="text/css"> </style> <style type="text/css">.hide_on_mobile { display: none !important;} @media only screen and (min-width: 480px) { .hide_on_mobile { display: block !important;} } .hide_section_on_mobile { display: none !important;} @media only screen and (min-width: 480px) { .hide_section_on_mobile { display: table !important;} } .hide_on_desktop { display: block !important;} @media only screen and (min-width: 480px) { .hide_on_desktop { display: none !important;} } .hide_section_on_desktop { display: table !important;} @media only screen and (min-width: 480px) { .hide_section_on_desktop { display: none !important;} } [owa] .mj-column-per-100 { width: 100%!important; } [owa] .mj-column-per-50 { width: 50%!important; } [owa] .mj-column-per-33 { width: 33.333333333333336%!important; } p { margin: 0px; } @media only print and (min-width:480px) { .mj-column-per-100 { width:100%!important; } .mj-column-per-40 { width:40%!important; } .mj-column-per-60 { width:60%!important; } .mj-column-per-50 { width: 50%!important; } mj-column-per-33 { width: 33.333333333333336%!important; } }</style> </head> <body style="background-color:#FFFFFF;"> <div style="background-color:#FFFFFF;"> <!--[if mso | IE]> <table align="center" border="0" cellpadding="0" cellspacing="0" class="" style="width:600px;" width="600" > <tr> <td style="line-height:0px;font-size:0px;mso-line-height-rule:exactly;"> <![endif]--> <div style="Margin:0px auto;max-width:600px;"> <table align="center" border="0" cellpadding="0" cellspacing="0" role="presentation" style="width:100%;"> <tbody> <tr> <td style="direction:ltr;font-size:0px;padding:9px 0px 9px 0px;text-align:center;vertical-align:top;"> <!--[if mso | IE]> <table role="presentation" border="0" cellpadding="0" cellspacing="0"> <tr> <td class="" style="vertical-align:top;width:600px;" > <![endif]--> <div class="mj-column-per-100 outlook-group-fix" style="font-size:13px;text-align:left;direction:ltr;display:inline-block;vertical-align:top;width:100%;"> <table border="0" cellpadding="0" cellspacing="0" role="presentation" style="vertical-align:top;" width="100%"> <tr> <td align="left" style="font-size:0px;padding:15px 15px 15px 15px;word-break:break-word;"> <div style="font-family:Ubuntu, Helvetica, Arial, sans-serif;font-size:11px;line-height:1.5;text-align:left;color:#000000;"> <p><span style="font-size: 16px; font-family: \'comic sans ms\', sans-serif;">Hai, Sahabat Alter Indonesia</span></p> </div> </td> </tr> </table> </div> <!--[if mso | IE]> </td> </tr> </table> <![endif]--> </td> </tr> </tbody> </table> </div> <!--[if mso | IE]> </td> </tr> </table> <table align="center" border="0" cellpadding="0" cellspacing="0" class="" style="width:600px;" width="600" > <tr> <td style="line-height:0px;font-size:0px;mso-line-height-rule:exactly;"> <![endif]--> <div style="Margin:0px auto;max-width:600px;"> <table align="center" border="0" cellpadding="0" cellspacing="0" role="presentation" style="width:100%;"> <tbody> <tr> <td style="direction:ltr;font-size:0px;padding:9px 0px 9px 0px;text-align:center;vertical-align:top;"> <!--[if mso | IE]> <table role="presentation" border="0" cellpadding="0" cellspacing="0"> <tr> <td class="" style="vertical-align:top;width:600px;" > <![endif]--> <div class="mj-column-per-100 outlook-group-fix" style="font-size:13px;text-align:left;direction:ltr;display:inline-block;vertical-align:top;width:100%;"> <table border="0" cellpadding="0" cellspacing="0" role="presentation" style="vertical-align:top;" width="100%"> <tr> <td align="left" style="font-size:0px;padding:15px 15px 15px 15px;word-break:break-word;"> <div style="font-family:Ubuntu, Helvetica, Arial, sans-serif;font-size:11px;line-height:1.5;text-align:left;color:#000000;"> <p><span style="font-size: 14px; font-family: \'comic sans ms\', sans-serif;">Kami mengirimkan email ini karena Anda meminta pengaturan ulang kata sandi. Klik tautan ini untuk membuat kata sandi baru:</span></p> </div> </td> </tr> </table> </div> <!--[if mso | IE]> </td> </tr> </table> <![endif]--> </td> </tr> </tbody> </table> </div> <!--[if mso | IE]> </td> </tr> </table> <table align="center" border="0" cellpadding="0" cellspacing="0" class="" style="width:600px;" width="600" > <tr> <td style="line-height:0px;font-size:0px;mso-line-height-rule:exactly;"> <![endif]--> <div style="Margin:0px auto;max-width:600px;"> <table align="center" border="0" cellpadding="0" cellspacing="0" role="presentation" style="width:100%;"> <tbody> <tr> <td style="direction:ltr;font-size:0px;padding:9px 0px 9px 0px;text-align:center;vertical-align:top;"> <!--[if mso | IE]> <table role="presentation" border="0" cellpadding="0" cellspacing="0"> <tr> <td class="" style="vertical-align:top;width:600px;" > <![endif]--> <div class="mj-column-per-100 outlook-group-fix" style="font-size:13px;text-align:left;direction:ltr;display:inline-block;vertical-align:top;width:100%;"> <table border="0" cellpadding="0" cellspacing="0" role="presentation" style="vertical-align:top;" width="100%"> <tr> <td align="center" vertical-align="middle" style="font-size:0px;padding:20px 20px 20px 20px;word-break:break-word;"> <table border="0" cellpadding="0" cellspacing="0" role="presentation" style="border-collapse:separate;line-height:100%;"> <tr> <td align="center" bgcolor="#e85034" role="presentation" style="border:0px solid #000;border-radius:24px;cursor:auto;mso-padding-alt:9px 26px 9px 26px;background:#e85034;" valign="middle"> <a href="' +
+          link +
+          '" style="display:inline-block;background:#e85034;color:#ffffff;font-family:Ubuntu, Helvetica, Arial, sans-serif, Helvetica, Arial, sans-serif;font-size:13px;font-weight:normal;line-height:100%;Margin:0;text-decoration:none;text-transform:none;padding:9px 26px 9px 26px;mso-padding-alt:0px;border-radius:24px;" target="_blank"> <div><span style="font-family: \'comic sans ms\', sans-serif;">RESET</span> KATA SANDI</div> </a> </td> </tr> </table> </td> </tr> </table> </div> <!--[if mso | IE]> </td> </tr> </table> <![endif]--> </td> </tr> </tbody> </table> </div> <!--[if mso | IE]> </td> </tr> </table> <table align="center" border="0" cellpadding="0" cellspacing="0" class="" style="width:600px;" width="600" > <tr> <td style="line-height:0px;font-size:0px;mso-line-height-rule:exactly;"> <![endif]--> <div style="Margin:0px auto;max-width:600px;"> <table align="center" border="0" cellpadding="0" cellspacing="0" role="presentation" style="width:100%;"> <tbody> <tr> <td style="direction:ltr;font-size:0px;padding:9px 0px 9px 0px;text-align:center;vertical-align:top;"> <!--[if mso | IE]> <table role="presentation" border="0" cellpadding="0" cellspacing="0"> <tr> <td class="" style="vertical-align:top;width:600px;" > <![endif]--> <div class="mj-column-per-100 outlook-group-fix" style="font-size:13px;text-align:left;direction:ltr;display:inline-block;vertical-align:top;width:100%;"> <table border="0" cellpadding="0" cellspacing="0" role="presentation" style="vertical-align:top;" width="100%"> <tr> <td align="left" style="font-size:0px;padding:15px 15px 15px 15px;word-break:break-word;"> <div style="font-family:Ubuntu, Helvetica, Arial, sans-serif;font-size:11px;line-height:1.5;text-align:left;color:#000000;"> <p><span style="font-family: \'comic sans ms\', sans-serif; font-size: 14px;">Jika Anda tidak meminta pengaturan ulang kata sandi, Anda dapat mengabaikan email ini. Kata sandi Anda tidak akan diubah.</span></p> </div> </td> </tr> </table> </div> <!--[if mso | IE]> </td> </tr> </table> <![endif]--> </td> </tr> </tbody> </table> </div> <!--[if mso | IE]> </td> </tr> </table> <![endif]--> </div> </body> </html>',
+      };
+
+      transport.sendMail(mailOptions, function (err, data) {
+        if (err) {
+          console.log("Error Occurs");
+        } else {
+          console.log("email sent!!!!");
+        }
+      });
+
+      res.send({
+        data: useremail,
+      });
+      return sendCustomPasswordResetEmail(useremail, link);
+    })
+    .catch(function (error) {
+      res.send(error.message);
+    });
+});
+
+app.post("/verified", function (req, res) {
+  const useremail = req.body.usergetEmail;
+  admin
+    .auth()
+    .generateEmailVerificationLink(useremail)
+    .then((link) => {
+      // Construct email verification template, embed the link and send
+      // using custom SMTP server.
+      let mailOptions = {
+        from: "Dont Reply <tim.sahabatalter@gmail.com>",
+        to: useremail,
+        subject: "Permintaan Verifikasi Email",
+        html:
+          '<!doctype html> <html xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office"> <head> <title> </title> <!--[if !mso]><!-- --> <meta http-equiv="X-UA-Compatible" content="IE=edge"> <!--<![endif]--> <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"> <meta name="viewport" content="width=device-width, initial-scale=1"> <style type="text/css"> #outlook a { padding:0; } .ReadMsgBody { width:100%; } .ExternalClass { width:100%; } .ExternalClass * { line-height:100%; } body { margin:0;padding:0;-webkit-text-size-adjust:100%;-ms-text-size-adjust:100%; } table, td { border-collapse:collapse;mso-table-lspace:0pt;mso-table-rspace:0pt; } img { border:0;height:auto;line-height:100%; outline:none;text-decoration:none;-ms-interpolation-mode:bicubic; } p { display:block;margin:13px 0; } </style> <!--[if !mso]><!--> <style type="text/css"> @media only screen and (max-width:480px) { @-ms-viewport { width:320px; } @viewport { width:320px; } } </style> <!--<![endif]--> <!--[if mso]> <xml> <o:OfficeDocumentSettings> <o:AllowPNG/> <o:PixelsPerInch>96</o:PixelsPerInch> </o:OfficeDocumentSettings> </xml> <![endif]--> <!--[if lte mso 11]> <style type="text/css"> .outlook-group-fix { width:100% !important; } </style> <![endif]--> <!--[if !mso]><!--> <link href="https://fonts.googleapis.com/css?family=Ubuntu:300,400,500,700" rel="stylesheet" type="text/css"> <link href="https://fonts.googleapis.com/css?family=Cabin:400,700" rel="stylesheet" type="text/css"> <style type="text/css"> @import url(https://fonts.googleapis.com/css?family=Ubuntu:300,400,500,700); @import url(https://fonts.googleapis.com/css?family=Cabin:400,700); </style> <!--<![endif]--><style type="text/css"> @media only screen and (min-width:480px) { .mj-column-per-100 { width:100% !important; max-width: 100%; } } </style> <style type="text/css"> </style> <style type="text/css">.hide_on_mobile { display: none !important;} @media only screen and (min-width: 480px) { .hide_on_mobile { display: block !important;} } .hide_section_on_mobile { display: none !important;} @media only screen and (min-width: 480px) { .hide_section_on_mobile { display: table !important;} } .hide_on_desktop { display: block !important;} @media only screen and (min-width: 480px) { .hide_on_desktop { display: none !important;} } .hide_section_on_desktop { display: table !important;} @media only screen and (min-width: 480px) { .hide_section_on_desktop { display: none !important;} } [owa] .mj-column-per-100 { width: 100%!important; } [owa] .mj-column-per-50 { width: 50%!important; } [owa] .mj-column-per-33 { width: 33.333333333333336%!important; } p { margin: 0px; } @media only print and (min-width:480px) { .mj-column-per-100 { width:100%!important; } .mj-column-per-40 { width:40%!important; } .mj-column-per-60 { width:60%!important; } .mj-column-per-50 { width: 50%!important; } mj-column-per-33 { width: 33.333333333333336%!important; } }</style> </head> <body style="background-color:#FFFFFF;"> <div style="background-color:#FFFFFF;"> <!--[if mso | IE]> <table align="center" border="0" cellpadding="0" cellspacing="0" class="" style="width:600px;" width="600" > <tr> <td style="line-height:0px;font-size:0px;mso-line-height-rule:exactly;"> <![endif]--> <div style="Margin:0px auto;max-width:600px;"> <table align="center" border="0" cellpadding="0" cellspacing="0" role="presentation" style="width:100%;"> <tbody> <tr> <td style="direction:ltr;font-size:0px;padding:9px 0px 9px 0px;text-align:center;vertical-align:top;"> <!--[if mso | IE]> <table role="presentation" border="0" cellpadding="0" cellspacing="0"> <tr> <td class="" style="vertical-align:top;width:600px;" > <![endif]--> <div class="mj-column-per-100 outlook-group-fix" style="font-size:13px;text-align:left;direction:ltr;display:inline-block;vertical-align:top;width:100%;"> <table border="0" cellpadding="0" cellspacing="0" role="presentation" style="vertical-align:top;" width="100%"> <tr> <td align="left" style="font-size:0px;padding:15px 15px 15px 15px;word-break:break-word;"> <div style="font-family:Ubuntu, Helvetica, Arial, sans-serif;font-size:11px;line-height:1.5;text-align:left;color:#000000;"> <p><span style="font-size: 16px; font-family: \'comic sans ms\', sans-serif;">Hai, Sahabat Alter Indonesia</span></p> </div> </td> </tr> </table> </div> <!--[if mso | IE]> </td> </tr> </table> <![endif]--> </td> </tr> </tbody> </table> </div> <!--[if mso | IE]> </td> </tr> </table> <table align="center" border="0" cellpadding="0" cellspacing="0" class="" style="width:600px;" width="600" > <tr> <td style="line-height:0px;font-size:0px;mso-line-height-rule:exactly;"> <![endif]--> <div style="Margin:0px auto;max-width:600px;"> <table align="center" border="0" cellpadding="0" cellspacing="0" role="presentation" style="width:100%;"> <tbody> <tr> <td style="direction:ltr;font-size:0px;padding:9px 0px 9px 0px;text-align:center;vertical-align:top;"> <!--[if mso | IE]> <table role="presentation" border="0" cellpadding="0" cellspacing="0"> <tr> <td class="" style="vertical-align:top;width:600px;" > <![endif]--> <div class="mj-column-per-100 outlook-group-fix" style="font-size:13px;text-align:left;direction:ltr;display:inline-block;vertical-align:top;width:100%;"> <table border="0" cellpadding="0" cellspacing="0" role="presentation" style="vertical-align:top;" width="100%"> <tr> <td align="left" style="font-size:0px;padding:15px 15px 15px 15px;word-break:break-word;"> <div style="font-family:Ubuntu, Helvetica, Arial, sans-serif;font-size:11px;line-height:1.5;text-align:left;color:#000000;"> <p><span style="font-size: 14px; font-family: \'comic sans ms\', sans-serif;">Kami mengirimkan email ini karena Anda meminta email verifikasi. Klik tautan ini untuk verifikasi email:</span></p> </div> </td> </tr> </table> </div> <!--[if mso | IE]> </td> </tr> </table> <![endif]--> </td> </tr> </tbody> </table> </div> <!--[if mso | IE]> </td> </tr> </table> <table align="center" border="0" cellpadding="0" cellspacing="0" class="" style="width:600px;" width="600" > <tr> <td style="line-height:0px;font-size:0px;mso-line-height-rule:exactly;"> <![endif]--> <div style="Margin:0px auto;max-width:600px;"> <table align="center" border="0" cellpadding="0" cellspacing="0" role="presentation" style="width:100%;"> <tbody> <tr> <td style="direction:ltr;font-size:0px;padding:9px 0px 9px 0px;text-align:center;vertical-align:top;"> <!--[if mso | IE]> <table role="presentation" border="0" cellpadding="0" cellspacing="0"> <tr> <td class="" style="vertical-align:top;width:600px;" > <![endif]--> <div class="mj-column-per-100 outlook-group-fix" style="font-size:13px;text-align:left;direction:ltr;display:inline-block;vertical-align:top;width:100%;"> <table border="0" cellpadding="0" cellspacing="0" role="presentation" style="vertical-align:top;" width="100%"> <tr> <td align="center" vertical-align="middle" style="font-size:0px;padding:20px 20px 20px 20px;word-break:break-word;"> <table border="0" cellpadding="0" cellspacing="0" role="presentation" style="border-collapse:separate;line-height:100%;"> <tr> <td align="center" bgcolor="#e85034" role="presentation" style="border:0px solid #000;border-radius:24px;cursor:auto;mso-padding-alt:9px 26px 9px 26px;background:#e85034;" valign="middle"> <a href="' +
+          link +
+          '" style="display:inline-block;background:#e85034;color:#ffffff;font-family:Ubuntu, Helvetica, Arial, sans-serif, Helvetica, Arial, sans-serif;font-size:13px;font-weight:normal;line-height:100%;Margin:0;text-decoration:none;text-transform:none;padding:9px 26px 9px 26px;mso-padding-alt:0px;border-radius:24px;" target="_blank"> <div><span style="font-family: \'comic sans ms\', sans-serif;">VERIFIKASI</span> EMAIL</div> </a> </td> </tr> </table> </td> </tr> </table> </div> <!--[if mso | IE]> </td> </tr> </table> <![endif]--> </td> </tr> </tbody> </table> </div> <!--[if mso | IE]> </td> </tr> </table> <table align="center" border="0" cellpadding="0" cellspacing="0" class="" style="width:600px;" width="600" > <tr> <td style="line-height:0px;font-size:0px;mso-line-height-rule:exactly;"> <![endif]--> <div style="Margin:0px auto;max-width:600px;"> <table align="center" border="0" cellpadding="0" cellspacing="0" role="presentation" style="width:100%;"> <tbody> <tr> <td style="direction:ltr;font-size:0px;padding:9px 0px 9px 0px;text-align:center;vertical-align:top;"> <!--[if mso | IE]> <table role="presentation" border="0" cellpadding="0" cellspacing="0"> <tr> <td class="" style="vertical-align:top;width:600px;" > <![endif]--> <div class="mj-column-per-100 outlook-group-fix" style="font-size:13px;text-align:left;direction:ltr;display:inline-block;vertical-align:top;width:100%;"> <table border="0" cellpadding="0" cellspacing="0" role="presentation" style="vertical-align:top;" width="100%"> <tr> <td align="left" style="font-size:0px;padding:15px 15px 15px 15px;word-break:break-word;"> <div style="font-family:Ubuntu, Helvetica, Arial, sans-serif;font-size:11px;line-height:1.5;text-align:left;color:#000000;"> <p><span style="font-family: \'comic sans ms\', sans-serif; font-size: 14px;">Jika Anda tidak meminta email verifikasi, Anda dapat mengabaikan email ini.</span></p> </div> </td> </tr> </table> </div> <!--[if mso | IE]> </td> </tr> </table> <![endif]--> </td> </tr> </tbody> </table> </div> <!--[if mso | IE]> </td> </tr> </table> <![endif]--> </div> </body> </html>',
+      };
+
+      transport.sendMail(mailOptions, function (err, data) {
+        if (err) {
+          console.log("Error Occurs");
+        } else {
+          console.log("email sent!!!!");
+        }
+      });
+
+      res.send({
+        data: useremail,
+      });
+      return sendCustomVerificationEmail(useremail, link);
+    })
+    .catch(function (error) {
+      res.send(error.message);
+    });
+});
+
+app.get("/account-verif", function (req, res, next) {
+  fs.readFile("./client/email-verif.html", null, function (error, data) {
+    if (error) {
+      res.writeHead(404);
+      res.write("Whoops! File not found!");
+    } else {
+      res.write(data);
+    }
+    res.end();
+  });
+});
+
+app.get("/pass-change", function (req, res, next) {
+  fs.readFile("./client/change-pass.html", null, function (error, data) {
+    if (error) {
+      res.writeHead(404);
+      res.write("Whoops! File not found!");
+    } else {
+      res.write(data);
+    }
+    res.end();
+  });
+});
+
+app.get("/testmail", function (req, res, next) {
+  let mailOptions = {
+    from: "tim.sahabatalter@gmail.com",
+    to: "rizal.rizarudesu@gmail.com",
+    subject: "Permintaan Lupa Password",
+    text: "test sending mail",
+  };
+
+  transport.sendMail(mailOptions, function (err, data) {
+    if (err) {
+      console.log("Error Occurs");
+    } else {
+      console.log("email sent!!!!");
+    }
+  });
+});
+
+app.post("/api", function (req, res) {
+  console.log(req.body);
+  res.send(
+    `I received your POST request. This is what you sent me: ${req.body.useruid}`
+  );
+});
+
+app.post("/sendVerif", function (req, res) {
+  const useremail = "qanitahilmaniah@gmail.com";
+  admin
+    .auth()
+    .generateEmailVerificationLink(useremail)
+    .then((link) => {
+      // Construct email verification template, embed the link and send
+      // using custom SMTP server.
+      let mailOptions = {
+        from: "Dont Reply <tim.sahabatalter@gmail.com>",
+        to: useremail,
+        subject: "Permintaan Verifikasi Email",
+        html:
+          '<!doctype html> <html xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office"> <head> <title> </title> <!--[if !mso]><!-- --> <meta http-equiv="X-UA-Compatible" content="IE=edge"> <!--<![endif]--> <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"> <meta name="viewport" content="width=device-width, initial-scale=1"> <style type="text/css"> #outlook a { padding:0; } .ReadMsgBody { width:100%; } .ExternalClass { width:100%; } .ExternalClass * { line-height:100%; } body { margin:0;padding:0;-webkit-text-size-adjust:100%;-ms-text-size-adjust:100%; } table, td { border-collapse:collapse;mso-table-lspace:0pt;mso-table-rspace:0pt; } img { border:0;height:auto;line-height:100%; outline:none;text-decoration:none;-ms-interpolation-mode:bicubic; } p { display:block;margin:13px 0; } </style> <!--[if !mso]><!--> <style type="text/css"> @media only screen and (max-width:480px) { @-ms-viewport { width:320px; } @viewport { width:320px; } } </style> <!--<![endif]--> <!--[if mso]> <xml> <o:OfficeDocumentSettings> <o:AllowPNG/> <o:PixelsPerInch>96</o:PixelsPerInch> </o:OfficeDocumentSettings> </xml> <![endif]--> <!--[if lte mso 11]> <style type="text/css"> .outlook-group-fix { width:100% !important; } </style> <![endif]--> <!--[if !mso]><!--> <link href="https://fonts.googleapis.com/css?family=Ubuntu:300,400,500,700" rel="stylesheet" type="text/css"> <link href="https://fonts.googleapis.com/css?family=Cabin:400,700" rel="stylesheet" type="text/css"> <style type="text/css"> @import url(https://fonts.googleapis.com/css?family=Ubuntu:300,400,500,700); @import url(https://fonts.googleapis.com/css?family=Cabin:400,700); </style> <!--<![endif]--><style type="text/css"> @media only screen and (min-width:480px) { .mj-column-per-100 { width:100% !important; max-width: 100%; } } </style> <style type="text/css"> </style> <style type="text/css">.hide_on_mobile { display: none !important;} @media only screen and (min-width: 480px) { .hide_on_mobile { display: block !important;} } .hide_section_on_mobile { display: none !important;} @media only screen and (min-width: 480px) { .hide_section_on_mobile { display: table !important;} } .hide_on_desktop { display: block !important;} @media only screen and (min-width: 480px) { .hide_on_desktop { display: none !important;} } .hide_section_on_desktop { display: table !important;} @media only screen and (min-width: 480px) { .hide_section_on_desktop { display: none !important;} } [owa] .mj-column-per-100 { width: 100%!important; } [owa] .mj-column-per-50 { width: 50%!important; } [owa] .mj-column-per-33 { width: 33.333333333333336%!important; } p { margin: 0px; } @media only print and (min-width:480px) { .mj-column-per-100 { width:100%!important; } .mj-column-per-40 { width:40%!important; } .mj-column-per-60 { width:60%!important; } .mj-column-per-50 { width: 50%!important; } mj-column-per-33 { width: 33.333333333333336%!important; } }</style> </head> <body style="background-color:#FFFFFF;"> <div style="background-color:#FFFFFF;"> <!--[if mso | IE]> <table align="center" border="0" cellpadding="0" cellspacing="0" class="" style="width:600px;" width="600" > <tr> <td style="line-height:0px;font-size:0px;mso-line-height-rule:exactly;"> <![endif]--> <div style="Margin:0px auto;max-width:600px;"> <table align="center" border="0" cellpadding="0" cellspacing="0" role="presentation" style="width:100%;"> <tbody> <tr> <td style="direction:ltr;font-size:0px;padding:9px 0px 9px 0px;text-align:center;vertical-align:top;"> <!--[if mso | IE]> <table role="presentation" border="0" cellpadding="0" cellspacing="0"> <tr> <td class="" style="vertical-align:top;width:600px;" > <![endif]--> <div class="mj-column-per-100 outlook-group-fix" style="font-size:13px;text-align:left;direction:ltr;display:inline-block;vertical-align:top;width:100%;"> <table border="0" cellpadding="0" cellspacing="0" role="presentation" style="vertical-align:top;" width="100%"> <tr> <td align="left" style="font-size:0px;padding:15px 15px 15px 15px;word-break:break-word;"> <div style="font-family:Ubuntu, Helvetica, Arial, sans-serif;font-size:11px;line-height:1.5;text-align:left;color:#000000;"> <p><span style="font-size: 16px; font-family: \'comic sans ms\', sans-serif;">Hai, Sahabat Alter Indonesia</span></p> </div> </td> </tr> </table> </div> <!--[if mso | IE]> </td> </tr> </table> <![endif]--> </td> </tr> </tbody> </table> </div> <!--[if mso | IE]> </td> </tr> </table> <table align="center" border="0" cellpadding="0" cellspacing="0" class="" style="width:600px;" width="600" > <tr> <td style="line-height:0px;font-size:0px;mso-line-height-rule:exactly;"> <![endif]--> <div style="Margin:0px auto;max-width:600px;"> <table align="center" border="0" cellpadding="0" cellspacing="0" role="presentation" style="width:100%;"> <tbody> <tr> <td style="direction:ltr;font-size:0px;padding:9px 0px 9px 0px;text-align:center;vertical-align:top;"> <!--[if mso | IE]> <table role="presentation" border="0" cellpadding="0" cellspacing="0"> <tr> <td class="" style="vertical-align:top;width:600px;" > <![endif]--> <div class="mj-column-per-100 outlook-group-fix" style="font-size:13px;text-align:left;direction:ltr;display:inline-block;vertical-align:top;width:100%;"> <table border="0" cellpadding="0" cellspacing="0" role="presentation" style="vertical-align:top;" width="100%"> <tr> <td align="left" style="font-size:0px;padding:15px 15px 15px 15px;word-break:break-word;"> <div style="font-family:Ubuntu, Helvetica, Arial, sans-serif;font-size:11px;line-height:1.5;text-align:left;color:#000000;"> <p><span style="font-size: 14px; font-family: \'comic sans ms\', sans-serif;">Kami mengirimkan email ini karena Anda meminta email verifikasi. Klik tautan ini untuk verifikasi email:</span></p> </div> </td> </tr> </table> </div> <!--[if mso | IE]> </td> </tr> </table> <![endif]--> </td> </tr> </tbody> </table> </div> <!--[if mso | IE]> </td> </tr> </table> <table align="center" border="0" cellpadding="0" cellspacing="0" class="" style="width:600px;" width="600" > <tr> <td style="line-height:0px;font-size:0px;mso-line-height-rule:exactly;"> <![endif]--> <div style="Margin:0px auto;max-width:600px;"> <table align="center" border="0" cellpadding="0" cellspacing="0" role="presentation" style="width:100%;"> <tbody> <tr> <td style="direction:ltr;font-size:0px;padding:9px 0px 9px 0px;text-align:center;vertical-align:top;"> <!--[if mso | IE]> <table role="presentation" border="0" cellpadding="0" cellspacing="0"> <tr> <td class="" style="vertical-align:top;width:600px;" > <![endif]--> <div class="mj-column-per-100 outlook-group-fix" style="font-size:13px;text-align:left;direction:ltr;display:inline-block;vertical-align:top;width:100%;"> <table border="0" cellpadding="0" cellspacing="0" role="presentation" style="vertical-align:top;" width="100%"> <tr> <td align="center" vertical-align="middle" style="font-size:0px;padding:20px 20px 20px 20px;word-break:break-word;"> <table border="0" cellpadding="0" cellspacing="0" role="presentation" style="border-collapse:separate;line-height:100%;"> <tr> <td align="center" bgcolor="#e85034" role="presentation" style="border:0px solid #000;border-radius:24px;cursor:auto;mso-padding-alt:9px 26px 9px 26px;background:#e85034;" valign="middle"> <a href="' +
+          link +
+          '" style="display:inline-block;background:#e85034;color:#ffffff;font-family:Ubuntu, Helvetica, Arial, sans-serif, Helvetica, Arial, sans-serif;font-size:13px;font-weight:normal;line-height:100%;Margin:0;text-decoration:none;text-transform:none;padding:9px 26px 9px 26px;mso-padding-alt:0px;border-radius:24px;" target="_blank"> <div><span style="font-family: \'comic sans ms\', sans-serif;">VERIFIKASI</span> EMAIL</div> </a> </td> </tr> </table> </td> </tr> </table> </div> <!--[if mso | IE]> </td> </tr> </table> <![endif]--> </td> </tr> </tbody> </table> </div> <!--[if mso | IE]> </td> </tr> </table> <table align="center" border="0" cellpadding="0" cellspacing="0" class="" style="width:600px;" width="600" > <tr> <td style="line-height:0px;font-size:0px;mso-line-height-rule:exactly;"> <![endif]--> <div style="Margin:0px auto;max-width:600px;"> <table align="center" border="0" cellpadding="0" cellspacing="0" role="presentation" style="width:100%;"> <tbody> <tr> <td style="direction:ltr;font-size:0px;padding:9px 0px 9px 0px;text-align:center;vertical-align:top;"> <!--[if mso | IE]> <table role="presentation" border="0" cellpadding="0" cellspacing="0"> <tr> <td class="" style="vertical-align:top;width:600px;" > <![endif]--> <div class="mj-column-per-100 outlook-group-fix" style="font-size:13px;text-align:left;direction:ltr;display:inline-block;vertical-align:top;width:100%;"> <table border="0" cellpadding="0" cellspacing="0" role="presentation" style="vertical-align:top;" width="100%"> <tr> <td align="left" style="font-size:0px;padding:15px 15px 15px 15px;word-break:break-word;"> <div style="font-family:Ubuntu, Helvetica, Arial, sans-serif;font-size:11px;line-height:1.5;text-align:left;color:#000000;"> <p><span style="font-family: \'comic sans ms\', sans-serif; font-size: 14px;">Jika Anda tidak meminta email verifikasi, Anda dapat mengabaikan email ini.</span></p> </div> </td> </tr> </table> </div> <!--[if mso | IE]> </td> </tr> </table> <![endif]--> </td> </tr> </tbody> </table> </div> <!--[if mso | IE]> </td> </tr> </table> <![endif]--> </div> </body> </html>',
+      };
+
+      transport.sendMail(mailOptions, function (err, data) {
+        if (err) {
+          console.log("Error Occurs");
+        } else {
+          console.log("email sent!!!!");
+        }
+      });
+
+      res.send({
+        data: useremail,
+      });
+      return sendCustomVerificationEmail(useremail, link);
+    })
+    .catch(function (error) {
+      res.send(error.message);
+    });
 });
 
 app.listen(port, () => {
