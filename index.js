@@ -112,7 +112,7 @@ app.get("/API-Menu", function (req, res, next) {
 
 /**  API GET MENU */
 app.get("/API-Materi", function (req, res, next) {
-  res.send([
+  const arrData = [
     {
       title: "Medikal Bedah",
       images:
@@ -233,7 +233,8 @@ app.get("/API-Materi", function (req, res, next) {
         "https://firebasestorage.googleapis.com/v0/b/materi-keperawatan.appspot.com/o/data%2Fmateri%2Ficon%2Ficon-jiwa.png?alt=media&token=96e4fc47-e963-4709-b646-ce9a33141a5d",
       index: "",
     },
-  ]);
+  ];
+  res.send(arrData);
 });
 
 app.listen(port, () => {
