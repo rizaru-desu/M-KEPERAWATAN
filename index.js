@@ -64,6 +64,13 @@ app.post("/API-Create", function (req, res, next) {
 app.get("/API-Menu", function (req, res, next) {
   const arrData = [
     {
+      title: "Materi Keperawatan",
+      subtitle: "Berisi materi-materi pembelajaran tentang Keperawatan.",
+      illustration:
+        "https://firebasestorage.googleapis.com/v0/b/materi-keperawatan.appspot.com/o/data%2Fimage%2Ficon-materi.png?alt=media&token=2e9a75f5-d194-4c0b-846d-4cfcd2da9f05",
+      page: "MateriKeperawatan",
+    },
+    {
       title: "Tips & Trik Uji Kompetensi",
       subtitle:
         "Berisi kumpulan video tips dan trik dalam Uji Kompetensi keperawatan.",
