@@ -62,7 +62,7 @@ app.post("/API-Create", function (req, res, next) {
 });
 
 app.get("/API-Menu", function (req, res, next) {
-  res.send([
+  const arrData = [
     {
       title: "Materi Keperawatan",
       subtitle: "Berisi materi-materi pembelajaran tentang Keperawatan.",
@@ -106,7 +106,8 @@ app.get("/API-Menu", function (req, res, next) {
         "https://firebasestorage.googleapis.com/v0/b/materi-keperawatan.appspot.com/o/data%2Fimage%2Ficon-tim.png?alt=media&token=14cee5aa-6bbc-4e06-b2c1-a4a58283f986",
       page: "PenyusunKeperawatan",
     },
-  ]);
+  ];
+  res.send(arrData);
 });
 
 /**  API GET MENU */
