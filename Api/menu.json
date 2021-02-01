@@ -1,0 +1,38 @@
+[
+  {
+    "title": "Materi Keperawatan",
+    "subtitle": "Berisi materi-materi pembelajaran tentang Keperawatan.",
+    "illustration": "https://firebasestorage.googleapis.com/v0/b/materi-keperawatan.appspot.com/o/data%2Fimage%2Ficon-materi.png?alt=media&token=2e9a75f5-d194-4c0b-846d-4cfcd2da9f05",
+    "page": "MateriKeperawatan"
+  },
+  {
+    "title": "Tips & Trik Uji Kompetensi",
+    "subtitle": "Berisi kumpulan video tips dan trik dalam Uji Kompetensi keperawatan.",
+    "illustration": "https://firebasestorage.googleapis.com/v0/b/materi-keperawatan.appspot.com/o/data%2Fimage%2Ficon-tip.png?alt=media&token=3abaecb2-d86a-4702-a0ff-8d45becfd18c",
+    "page": "PlayList"
+  },
+  {
+    "title": "S.O.P Keperawatan",
+    "subtitle": "Berisi kumpulan video S.O.P tentang Keperawatan.",
+    "illustration": "https://firebasestorage.googleapis.com/v0/b/materi-keperawatan.appspot.com/o/data%2Fimage%2Ficon-sop.png?alt=media&token=d8e1fd61-70ed-4313-a673-d814fd789156",
+    "page": "PlayList"
+  },
+  {
+    "title": "Jurnal Keperawatan",
+    "subtitle": "Berisi kumpulan jurnal keperawatan.",
+    "illustration": "https://firebasestorage.googleapis.com/v0/b/materi-keperawatan.appspot.com/o/data%2Fimage%2Ficon-jurnal.png?alt=media&token=b0f685dc-02fb-4a39-951c-08b6cafd55cb",
+    "page": "JurnalKeperawatan"
+  },
+  {
+    "title": "Kamus Kesehatan",
+    "subtitle": "Berisi istilah dan bahasa yang dipakai pada bidang kesehatan.",
+    "illustration": "https://firebasestorage.googleapis.com/v0/b/materi-keperawatan.appspot.com/o/data%2Fimage%2Ficon-ebook.png?alt=media&token=107657c9-9d21-4feb-9adb-1cf70705293e",
+    "page": "KamusKesehatan"
+  },
+  {
+    "title": "Tim Penyusun",
+    "subtitle": "Daftar profil tim penyusun dalam materi keperawatan.",
+    "illustration": "https://firebasestorage.googleapis.com/v0/b/materi-keperawatan.appspot.com/o/data%2Fimage%2Ficon-tim.png?alt=media&token=14cee5aa-6bbc-4e06-b2c1-a4a58283f986",
+    "page": "PenyusunKeperawatan"
+  }
+]
