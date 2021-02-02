@@ -61,6 +61,14 @@ app.post("/API-Create", function (req, res, next) {
     });
 });
 
+app.post("/API-MKEP", function (req, res, next) {
+  fs.readFile("Api/" + req.body.nameJSON, (err, data) => {
+    if (err) throw err;
+    let json = JSON.parse(data);
+    res.send(json);
+  });
+});
+
 app.get("/API-Penyusun", function (req, res, next) {
   fs.readFile("Api/penyusun.json", (err, data) => {
     if (err) throw err;
