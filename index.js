@@ -95,6 +95,15 @@ app.get("/API-Kamus", function (req, res, next) {
   });
 });
 
+/**  API GET OBAT*/
+app.get("/API-Obat", function (req, res, next) {
+  fs.readFile("Api/obat.json", (err, data) => {
+    if (err) throw err;
+    let materi = JSON.parse(data);
+    res.send(materi);
+  });
+});
+
 app.listen(port, () => {
   console.log("Listening on port local");
 });
