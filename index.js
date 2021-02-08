@@ -112,6 +112,15 @@ app.get("/API-Obat", function (req, res, next) {
   });
 });
 
+/**  API GET OBAT*/
+app.get("/API-Jurnal", function (req, res, next) {
+  fs.readFile("Api/jurnal.json", (err, data) => {
+    if (err) throw err;
+    let materi = JSON.parse(data);
+    res.send(materi);
+  });
+});
+
 app.listen(port, () => {
   console.log("Listening on port local");
 });
