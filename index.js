@@ -26,7 +26,7 @@ app.use(bodyParser.json({ type: "application/json" }));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cors());
 
-app.use(express.static("client"));
+//app.use(express.static("client"));
 
 /**  API CREATE USER*/
 app.post("/API-Create", function (req, res, next) {
@@ -66,6 +66,21 @@ app.post("/API-MKEP", function (req, res, next) {
     if (err) throw err;
     let json = JSON.parse(data);
     res.send(json);
+  });
+});
+
+app.get("/test-pdf", function (req, res, next) {
+  res.writeHead(200, {
+    "Content-Type": "text/html",
+  });
+  fs.readFile("./client/anak/index.html", null, function (error, data) {
+    if (error) {
+      res.writeHead(404);
+      res.write("Whoops! File not found!");
+    } else {
+      res.write(data);
+    }
+    res.end();
   });
 });
 
