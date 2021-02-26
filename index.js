@@ -26,7 +26,7 @@ app.use(bodyParser.json({ type: "application/json" }));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cors());
 
-//app.use(express.static("client"));
+app.use(express.static("client"));
 
 /**  API CREATE USER*/
 app.post("/API-Create", function (req, res, next) {
