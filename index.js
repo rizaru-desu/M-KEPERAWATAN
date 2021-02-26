@@ -102,7 +102,7 @@ app.get("/API-Menu", function (req, res, next) {
 
 /**  API GET MENU */
 app.get("/API-Materi", function (req, res, next) {
-  fs.readFile("Api/penyusun.json", (err, data) => {
+  fs.readFile("Api/materi.json", (err, data) => {
     if (err) throw err;
     let materi = JSON.parse(data);
     res.send(materi);
