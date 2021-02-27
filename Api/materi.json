@@ -2,79 +2,66 @@
   {
     "title": "Medikal Bedah 1",
     "images": "https://firebasestorage.googleapis.com/v0/b/materi-keperawatan.appspot.com/o/data%2Fmateri%2Ficon%2Ficon-medikalbedah.png?alt=media&token=61196de6-7018-4ecd-89e4-112bfcec9774",
-    "index": "1",
-    "path": "http://alter.washi.id/mkep/medikal%20bedah%201/"
+    "index": "http://alter.washi.id/mkep/medikal%20bedah%201/"
   },
   {
     "title": "Medikal Bedah 2",
     "images": "https://firebasestorage.googleapis.com/v0/b/materi-keperawatan.appspot.com/o/data%2Fmateri%2Ficon%2Ficon-medikalbedah.png?alt=media&token=61196de6-7018-4ecd-89e4-112bfcec9774",
-    "index": "2",
-    "path": "http://alter.washi.id/mkep/medikal%20bedah%202/"
+    "index": "http://alter.washi.id/mkep/medikal%20bedah%202/"
   },
   {
     "title": "Kebutuhan Dasar Manusia",
     "images": "https://firebasestorage.googleapis.com/v0/b/materi-keperawatan.appspot.com/o/data%2Fmateri%2Ficon%2Ficon-kebutuhan.png?alt=media&token=e152efa3-6546-4859-a9da-6b35856c56d1",
-    "index": "4",
-    "path": "http://alter.washi.id/mkep/kdm/"
+    "index": "http://alter.washi.id/mkep/kdm/"
   },
   {
     "title": "Promosi Kesehatan",
     "images": "https://firebasestorage.googleapis.com/v0/b/materi-keperawatan.appspot.com/o/data%2Fmateri%2Ficon%2Ficon-promosi.png?alt=media&token=d27261cd-fa8a-49a2-978a-a57846556c74",
-    "index": "6",
-    "path": "http://alter.washi.id/mkep/promosi%20kesehatan/"
+    "index": "http://alter.washi.id/mkep/promosi%20kesehatan/"
   },
   {
     "title": "Komunitas & Keluarga",
     "images": "https://firebasestorage.googleapis.com/v0/b/materi-keperawatan.appspot.com/o/data%2Fmateri%2Ficon%2Ficon-komunitas%26keluarga.png?alt=media&token=aeffa4a1-44a6-4780-af61-e98eec9950ac",
-    "index": "8",
-    "path": "http://alter.washi.id/mkep/komunitas%20%26%20kelurga/"
+    "index": "http://alter.washi.id/mkep/komunitas%20%26%20kelurga/"
   },
   {
     "title": "Kegawatdaruratan",
     "images": "https://firebasestorage.googleapis.com/v0/b/materi-keperawatan.appspot.com/o/data%2Fmateri%2Ficon%2Ficon-ugd.png?alt=media&token=a62a4976-7bfa-48f1-8aad-e14c01c0b6e4",
-    "index": "9",
-    "path": "http://alter.washi.id/mkep/gadar/"
+    "index": "http://alter.washi.id/mkep/gadar/"
   },
   {
     "title": "Gerontik",
     "images": "https://firebasestorage.googleapis.com/v0/b/materi-keperawatan.appspot.com/o/data%2Fmateri%2Ficon%2Ficon-gerontik.png?alt=media&token=2ee046f2-4250-4c24-b3e5-819333d3ac51",
-    "index": "10",
-    "path": "http://alter.washi.id/mkep/gerontik/"
+    "index": "http://alter.washi.id/mkep/gerontik/"
   },
   {
     "title": "Anak",
     "images": "https://firebasestorage.googleapis.com/v0/b/materi-keperawatan.appspot.com/o/data%2Fmateri%2Ficon%2Ficon-anak.png?alt=media&token=ec253eec-a341-412f-be57-7dba8efb885d",
-    "index": "12",
-    "path": "http://alter.washi.id/mkep/anak/"
+    "index": "http://alter.washi.id/mkep/anak/"
   },
   {
     "title": "Konsep Dasar Keperawatan",
     "images": "https://firebasestorage.googleapis.com/v0/b/materi-keperawatan.appspot.com/o/data%2Fmateri%2Ficon%2Ficon-konsepdasar.png?alt=media&token=3d50c2ec-50ca-4794-b377-327dc0fdb0ce",
-    "index": "13",
-    "path": "http://alter.washi.id/mkep/konsep%20dasar%20keperawatan/"
+    "index": "http://alter.washi.id/mkep/konsep%20dasar%20keperawatan/"
   },
   {
     "title": "Manajemen",
     "images": "https://firebasestorage.googleapis.com/v0/b/materi-keperawatan.appspot.com/o/data%2Fmateri%2Ficon%2Ficon-manajemen.png?alt=media&token=f5800238-2a8c-48f9-8522-9b2279ffdb90",
-    "index": "16",
-    "path": "http://alter.washi.id/mkep/manajemen/"
+    "index": "http://alter.washi.id/mkep/manajemen/"
   },
   {
     "title": "Biomedik",
     "images": "https://firebasestorage.googleapis.com/v0/b/materi-keperawatan.appspot.com/o/data%2Fmateri%2Ficon%2Ficon-biomedik.png?alt=media&token=d3bf3f18-74ca-47f2-8b3d-3081d9e9309e",
-    "index": "18",
-    "path": "http://alter.washi.id/mkep/biomedik/"
+    "index": "http://alter.washi.id/mkep/biomedik/"
   },
   {
     "title": "Mikrobiologi",
     "images": "https://firebasestorage.googleapis.com/v0/b/materi-keperawatan.appspot.com/o/data%2Fmateri%2Ficon%2Ficon-mikrobiologi.png?alt=media&token=c3cc7ebc-bb48-4297-8fd7-1cdf9af5e29a",
-    "index": "20",
-    "path": "http://alter.washi.id/mkep/mikrobiologi/"
+    "index": "http://alter.washi.id/mkep/mikrobiologi/"
   },
   {
     "title": "Jiwa",
     "images": "https://firebasestorage.googleapis.com/v0/b/materi-keperawatan.appspot.com/o/data%2Fmateri%2Ficon%2Ficon-jiwa.png?alt=media&token=96e4fc47-e963-4709-b646-ce9a33141a5d",
-    "index": "21",
-    "path": "http://alter.washi.id/mkep/jiwa/"
+    "index": "http://alter.washi.id/mkep/jiwa/"
   }
 ]
