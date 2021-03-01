@@ -1,25 +1,25 @@
 [
   {
     "id": 1,
-    "images": "https://firebasestorage.googleapis.com/v0/b/materi-keperawatan.appspot.com/o/data%2Fsop%2FSOP-1.jpg?alt=media&token=dbeccbc9-19bb-4772-9dfa-608f2d2fa751",
+    "images": "https://firebasestorage.googleapis.com/v0/b/materi-keperawatan.appspot.com/o/data%2Ftips%2FLayer%201.jpg?alt=media&token=aeba314d-8ee9-4d0d-9f54-9216f95f2c85",
     "path": "https://drive.google.com/file/d/1tdiFMzxuwkMyBjvReM5mtRk3jAVqJmOE/preview",
     "title": "Menurut Akbar Asfar, S.Kep., NS ., M.kes"
   },
   {
     "id": 2,
-    "images": "sop/SOP-2.png",
+    "images": "https://firebasestorage.googleapis.com/v0/b/materi-keperawatan.appspot.com/o/data%2Ftips%2FLayer%202.jpg?alt=media&token=aa1d44a4-b310-4aa8-876b-8227998b6832",
     "path": "https://drive.google.com/file/d/1lrV6aP8Myvp1yn9z5vSnKFkuyGTlG5FF/preview",
     "title": "Menurut Brajakson Siokal, S.Kep., NS., M.Kep"
   },
   {
     "id": 3,
-    "images": "sop/SOP-3.png",
+    "images": "https://firebasestorage.googleapis.com/v0/b/materi-keperawatan.appspot.com/o/data%2Ftips%2FLayer%203.jpg?alt=media&token=b45f45b7-1135-4827-aff8-65f83a05bfb3",
     "path": "https://drive.google.com/file/d/1VGVIOdweu0whccwlvH9qUneO5yeB_wM8/preview",
     "title": "Menurut Sudarman., S.Kep., NS., M.Kep"
   },
   {
     "id": 4,
-    "images": "sop/SOP-4.png",
+    "images": "https://firebasestorage.googleapis.com/v0/b/materi-keperawatan.appspot.com/o/data%2Ftips%2FLayer%204.jpg?alt=media&token=720a60ab-8106-4669-a756-7be7c986c6d7",
     "path": "https://drive.google.com/file/d/1bsVmA3-DQ1uFt3HcMfPxV_AMLYYAY5cl/preview",
     "title": "Menurut Ns. Ambo Anto, S.Kep., M.MKep"
   }
