@@ -1,0 +1,128 @@
+[
+  {
+    "title": "Medikal Bedah 1",
+    "images": "https://firebasestorage.googleapis.com/v0/b/materi-keperawatan.appspot.com/o/data%2Fmateri%2Ficon%2Ficon-medikalbedah.png?alt=media&token=61196de6-7018-4ecd-89e4-112bfcec9774",
+    "index": "1",
+    "path": "http://alter.washi.id/mkep/medikal%20bedah%201/"
+  },
+  {
+    "title": "Medikal Bedah 2",
+    "images": "https://firebasestorage.googleapis.com/v0/b/materi-keperawatan.appspot.com/o/data%2Fmateri%2Ficon%2Ficon-medikalbedah.png?alt=media&token=61196de6-7018-4ecd-89e4-112bfcec9774",
+    "index": "2",
+    "path": "http://alter.washi.id/mkep/medikal%20bedah%202/"
+  },
+  {
+    "title": "Psikologi",
+    "images": "https://firebasestorage.googleapis.com/v0/b/materi-keperawatan.appspot.com/o/data%2Fmateri%2Ficon%2Ficon-piskologi.png?alt=media&token=01bbecc6-7559-4b5a-bb25-10e3da034636",
+    "index": "3",
+    "path": "http://alter.washi.id/mkep/"
+  },
+  {
+    "title": "Kebutuhan Dasar Manusia",
+    "images": "https://firebasestorage.googleapis.com/v0/b/materi-keperawatan.appspot.com/o/data%2Fmateri%2Ficon%2Ficon-kebutuhan.png?alt=media&token=e152efa3-6546-4859-a9da-6b35856c56d1",
+    "index": "4",
+    "path": "http://alter.washi.id/mkep/kdm/"
+  },
+  {
+    "title": "Pengantar Riset",
+    "images": "https://firebasestorage.googleapis.com/v0/b/materi-keperawatan.appspot.com/o/data%2Fmateri%2Ficon%2Ficon-riset.png?alt=media&token=ebbbe9c0-822e-47de-adf6-caa33f807fb7",
+    "index": "5",
+    "path": "http://alter.washi.id/mkep/"
+  },
+  {
+    "title": "Promosi Kesehatan",
+    "images": "https://firebasestorage.googleapis.com/v0/b/materi-keperawatan.appspot.com/o/data%2Fmateri%2Ficon%2Ficon-promosi.png?alt=media&token=d27261cd-fa8a-49a2-978a-a57846556c74",
+    "index": "6",
+    "path": "http://alter.washi.id/mkep/"
+  },
+  {
+    "title": "Manajemen Keselamatan",
+    "images": "https://firebasestorage.googleapis.com/v0/b/materi-keperawatan.appspot.com/o/data%2Fmateri%2Ficon%2Ficon-manajemenkeselamatan.png?alt=media&token=591703ec-8761-421a-8d7b-2822873b0ba3",
+    "index": "7",
+    "path": "http://alter.washi.id/mkep/"
+  },
+  {
+    "title": "Komunitas & Keluarga",
+    "images": "https://firebasestorage.googleapis.com/v0/b/materi-keperawatan.appspot.com/o/data%2Fmateri%2Ficon%2Ficon-komunitas%26keluarga.png?alt=media&token=aeffa4a1-44a6-4780-af61-e98eec9950ac",
+    "index": "8",
+    "path": "http://alter.washi.id/mkep/komunitas%20%26%20kelurga/"
+  },
+  {
+    "title": "Kegawatdaruratan",
+    "images": "https://firebasestorage.googleapis.com/v0/b/materi-keperawatan.appspot.com/o/data%2Fmateri%2Ficon%2Ficon-ugd.png?alt=media&token=a62a4976-7bfa-48f1-8aad-e14c01c0b6e4",
+    "index": "9",
+    "path": "http://alter.washi.id/mkep/gadar/"
+  },
+  {
+    "title": "Gerontik",
+    "images": "https://firebasestorage.googleapis.com/v0/b/materi-keperawatan.appspot.com/o/data%2Fmateri%2Ficon%2Ficon-gerontik.png?alt=media&token=2ee046f2-4250-4c24-b3e5-819333d3ac51",
+    "index": "10",
+    "path": "http://alter.washi.id/mkep/gerontik/"
+  },
+  {
+    "title": "Ilmu Gizi",
+    "images": "https://firebasestorage.googleapis.com/v0/b/materi-keperawatan.appspot.com/o/data%2Fmateri%2Ficon%2Ficon-gizi.png?alt=media&token=d6dd4c5f-802f-44f9-aae2-15825238ab4d",
+    "index": "11",
+    "path": "http://alter.washi.id/mkep/"
+  },
+  {
+    "title": "Anak",
+    "images": "https://firebasestorage.googleapis.com/v0/b/materi-keperawatan.appspot.com/o/data%2Fmateri%2Ficon%2Ficon-anak.png?alt=media&token=ec253eec-a341-412f-be57-7dba8efb885d",
+    "index": "12",
+    "path": "http://alter.washi.id/mkep/anak/"
+  },
+  {
+    "title": "Konsep Dasar Keperawatan",
+    "images": "https://firebasestorage.googleapis.com/v0/b/materi-keperawatan.appspot.com/o/data%2Fmateri%2Ficon%2Ficon-konsepdasar.png?alt=media&token=3d50c2ec-50ca-4794-b377-327dc0fdb0ce",
+    "index": "13",
+    "path": "http://alter.washi.id/mkep/konsep%20dasar%20keperawatan/"
+  },
+  {
+    "title": "Etika",
+    "images": "https://firebasestorage.googleapis.com/v0/b/materi-keperawatan.appspot.com/o/data%2Fmateri%2Ficon%2Ficon-etika.png?alt=media&token=beaf8b33-ecdd-491b-ad0a-5e39ff5f13ac",
+    "index": "14",
+    "path": "http://alter.washi.id/mkep/"
+  },
+  {
+    "title": "Maternitas",
+    "images": "https://firebasestorage.googleapis.com/v0/b/materi-keperawatan.appspot.com/o/data%2Fmateri%2Ficon%2Ficon-maternitas.png?alt=media&token=653c67d7-2e6e-4786-a7c1-f0b09665294b",
+    "index": "15",
+    "path": "http://alter.washi.id/mkep/"
+  },
+  {
+    "title": "Manajemen",
+    "images": "https://firebasestorage.googleapis.com/v0/b/materi-keperawatan.appspot.com/o/data%2Fmateri%2Ficon%2Ficon-manajemen.png?alt=media&token=f5800238-2a8c-48f9-8522-9b2279ffdb90",
+    "index": "16",
+    "path": "http://alter.washi.id/mkep/manajemen/"
+  },
+  {
+    "title": "Komunikasi",
+    "images": "https://firebasestorage.googleapis.com/v0/b/materi-keperawatan.appspot.com/o/data%2Fmateri%2Ficon%2Ficon-komunikasi.png?alt=media&token=60e23e60-411b-45f9-9911-359d03f802e4",
+    "index": "17",
+    "path": "http://alter.washi.id/mkep/"
+  },
+  {
+    "title": "Biomedik",
+    "images": "https://firebasestorage.googleapis.com/v0/b/materi-keperawatan.appspot.com/o/data%2Fmateri%2Ficon%2Ficon-biomedik.png?alt=media&token=d3bf3f18-74ca-47f2-8b3d-3081d9e9309e",
+    "index": "18",
+    "path": "http://alter.washi.id/mkep/biomedik/"
+  },
+  {
+    "title": "Farmakologi",
+    "images": "https://firebasestorage.googleapis.com/v0/b/materi-keperawatan.appspot.com/o/data%2Fmateri%2Ficon%2Ficon-farmakologi.png?alt=media&token=0e6d83f2-0658-49e9-a803-378c4376d5c0",
+    "index": "19",
+    "path": "http://alter.washi.id/mkep/"
+  },
+  {
+    "title": "Mikrobiologi",
+    "images": "https://firebasestorage.googleapis.com/v0/b/materi-keperawatan.appspot.com/o/data%2Fmateri%2Ficon%2Ficon-mikrobiologi.png?alt=media&token=c3cc7ebc-bb48-4297-8fd7-1cdf9af5e29a",
+    "index": "20",
+    "path": "http://alter.washi.id/mkep/mikrobiologi/"
+  },
+  {
+    "title": "Jiwa",
+    "images": "https://firebasestorage.googleapis.com/v0/b/materi-keperawatan.appspot.com/o/data%2Fmateri%2Ficon%2Ficon-jiwa.png?alt=media&token=96e4fc47-e963-4709-b646-ce9a33141a5d",
+    "index": "21",
+    "path": "http://alter.washi.id/mkep/jiwa/"
+  }
+]
