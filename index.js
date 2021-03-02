@@ -61,6 +61,31 @@ app.post("/API-Create", function (req, res, next) {
     });
 });
 
+/** REMOVE USER */
+app.post("/remove-users", function (req, res, next) {
+  admin
+    .auth()
+    .deleteUser(req.body.useruid)
+    .then(function () {
+      console.log("Successfully deleted user");
+      var adaRef = admin.database().ref("/" + req.body.useruid);
+      adaRef
+        .remove()
+        .then(function () {
+          console.log("Remove succeeded.");
+        })
+        .catch(function (error) {
+          res.send(error);
+        });
+      res.send({
+        data: "Remove succeeded.",
+      });
+    })
+    .catch(function (error) {
+      res.send(error);
+    });
+});
+
 app.post("/API-MKEP", function (req, res, next) {
   fs.readFile("Api/" + req.body.nameJSON, (err, data) => {
     if (err) throw err;
