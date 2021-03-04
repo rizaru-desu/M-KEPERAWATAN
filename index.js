@@ -115,6 +115,7 @@ app.post("/change-key", function (req, res, next) {
     });
 });
 
+/** REMOVE USER */
 app.post("/get-db", function (req, res, next) {
   var db = admin.database();
   var ref = db.ref("/" + req.body.useruid);
