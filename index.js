@@ -61,6 +61,21 @@ app.post("/API-Create", function (req, res, next) {
     });
 });
 
+/** FIND USER */
+app.post("/find-email", function (req, res, next) {
+  admin
+    .auth()
+    .getUserByEmail(req.body.usergetEmail)
+    .then((userRecord) => {
+      // See the UserRecord reference doc for the contents of userRecord.
+      console.log(`Successfully fetched user data: ${userRecord.toJSON()}`);
+      res.send(userRecord.toJSON());
+    })
+    .catch((error) => {
+      console.log("Error fetching user data:", error);
+    });
+});
+
 /** REMOVE USER */
 app.post("/remove-users", function (req, res, next) {
   admin
@@ -84,6 +99,30 @@ app.post("/remove-users", function (req, res, next) {
     .catch(function (error) {
       res.send(error);
     });
+});
+
+/** Change Key */
+app.post("/change-key", function (req, res, next) {
+  var usersRef = admin.database().ref("/").child(req.body.useruid);
+  usersRef
+    .update({
+      serialKey: req.body.serialKey,
+    })
+    .then(function () {
+      res.send({
+        data: "Change Key succeeded.",
+      });
+    });
+});
+
+app.post("/get-db", function (req, res, next) {
+  var db = admin.database();
+  var ref = db.ref("/" + req.body.useruid);
+  ref.once("value").then(function (snapshot) {
+    res.send({
+      data: snapshot.val().serialKey,
+    });
+  });
 });
 
 app.post("/API-MKEP", function (req, res, next) {
