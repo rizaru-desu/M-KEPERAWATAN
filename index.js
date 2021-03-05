@@ -48,7 +48,7 @@ app.post("/API-Create", function (req, res, next) {
       usersRef.set({
         displayCampus: req.body.displayCampus,
         serialKey: req.body.serialKey,
-        previllage: req.body.previllage,
+        previllage: false,
       });
       res.send({
         message: userRecord.uid,
