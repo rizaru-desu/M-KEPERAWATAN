@@ -34,7 +34,7 @@ app.post("/API-Create", function (req, res, next) {
     .auth()
     .createUser({
       email: req.body.email,
-      emailVerified: true,
+      emailVerified: false,
       phoneNumber: req.body.phoneNumber,
       password: req.body.password,
       displayName: req.body.displayName,
