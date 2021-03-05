@@ -61,6 +61,38 @@ app.post("/API-Create", function (req, res, next) {
     });
 });
 
+app.get("/dumb", function (req, res, next) {
+  admin
+    .auth()
+    .createUser({
+      email: "rizal.rizarudesu@gmail.com",
+      emailVerified: false,
+      phoneNumber: "+62816534024",
+      password: "123456789",
+      displayName: "Developer",
+      photoURL:
+        "https://firebasestorage.googleapis.com/v0/b/materi-keperawatan.appspot.com/o/data%2Fprofile.png?alt=media&token=d99bdc0e-22bf-4749-a792-4d562b52dfcc",
+      disabled: false,
+    })
+    .then((userRecord) => {
+      // See the UserRecord reference doc for the contents of userRecord.
+      var usersRef = admin.database().ref("/").child(userRecord.uid);
+      usersRef.set({
+        displayCampus: "developers",
+        serialKey: "2b64c85da7707f0f",
+        previllage: false,
+      });
+      res.send({
+        message: userRecord.uid,
+      });
+      // See the UserRecord reference doc for the contents of userRecord.
+      console.log("Successfully created new user:", userRecord.uid);
+    })
+    .catch((error) => {
+      res.send(error);
+    });
+});
+
 /** FIND USER */
 app.post("/find-email", function (req, res, next) {
   admin
