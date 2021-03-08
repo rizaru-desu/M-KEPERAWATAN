@@ -20,7 +20,6 @@ const serviceAccount = require("./service_account.json");
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
   databaseURL: "https://materi-keperawatan-default-rtdb.firebaseio.com",
-  storageBucket: "materi-keperawatan.appspot.com",
 });
 
 app.use(bodyParser.json({ type: "application/json" }));
@@ -93,8 +92,6 @@ app.post("/remove-users", function (req, res, next) {
         .catch(function (error) {
           res.send(error);
         });
-      var bucket = admin.storage().bucket();
-      bucket.deleteFiles("/profile/" + req.body.useruid);
       res.send({
         data: "Remove succeeded.",
       });
