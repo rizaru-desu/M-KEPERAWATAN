@@ -20,6 +20,7 @@ const serviceAccount = require("./service_account.json");
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
   databaseURL: "https://materi-keperawatan-default-rtdb.firebaseio.com",
+  storageBucket: "materi-keperawatan.appspot.com",
 });
 
 app.use(bodyParser.json({ type: "application/json" }));
@@ -48,38 +49,6 @@ app.post("/API-Create", function (req, res, next) {
       usersRef.set({
         displayCampus: req.body.displayCampus,
         serialKey: req.body.serialKey,
-        previllage: false,
-      });
-      res.send({
-        message: userRecord.uid,
-      });
-      // See the UserRecord reference doc for the contents of userRecord.
-      console.log("Successfully created new user:", userRecord.uid);
-    })
-    .catch((error) => {
-      res.send(error);
-    });
-});
-
-app.get("/dumb", function (req, res, next) {
-  admin
-    .auth()
-    .createUser({
-      email: "rizal.rizarudesu@gmail.com",
-      emailVerified: false,
-      phoneNumber: "+62816534024",
-      password: "123456789",
-      displayName: "Developer",
-      photoURL:
-        "https://firebasestorage.googleapis.com/v0/b/materi-keperawatan.appspot.com/o/data%2Fprofile.png?alt=media&token=d99bdc0e-22bf-4749-a792-4d562b52dfcc",
-      disabled: false,
-    })
-    .then((userRecord) => {
-      // See the UserRecord reference doc for the contents of userRecord.
-      var usersRef = admin.database().ref("/").child(userRecord.uid);
-      usersRef.set({
-        displayCampus: "developers",
-        serialKey: "2b64c85da7707f0f",
         previllage: false,
       });
       res.send({
@@ -124,6 +93,8 @@ app.post("/remove-users", function (req, res, next) {
         .catch(function (error) {
           res.send(error);
         });
+      var bucket = admin.storage().bucket();
+      bucket.deleteFiles("/profile/" + req.body.useruid);
       res.send({
         data: "Remove succeeded.",
       });
@@ -133,7 +104,7 @@ app.post("/remove-users", function (req, res, next) {
     });
 });
 
-/** Change Key */
+/** CHANGE KEY*/
 app.post("/change-key", function (req, res, next) {
   var usersRef = admin.database().ref("/").child(req.body.useruid);
   usersRef
@@ -147,7 +118,7 @@ app.post("/change-key", function (req, res, next) {
     });
 });
 
-/** REMOVE USER */
+/** GET DATA */
 app.post("/get-db", function (req, res, next) {
   var db = admin.database();
   var ref = db.ref("/" + req.body.useruid);
